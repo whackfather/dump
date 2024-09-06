@@ -1,19 +1,15 @@
 # Nosecone Calculator
 # UI and Error Catching
-# v2.0
+# v2.1
 # Written by Roman Rodriguez
 
-from time import sleep
 import nccalcs
 
 valid_names = ["conic", "cn", "parabolic", "pb", "haack", "hs", "power", "ps", "ellipse", "ep", "ogive", "to"]
 print("Welcome to the Nosecone Radius Calculator.")
-sleep(1)
 print('Enter "help" for help, or "exit" to close program.')
-sleep(2)
 print("Valid shape name entries:")
 print(str(valid_names).replace("[", "").replace("]", "").replace("'", ""))
-sleep(1)
 
 while True:
     shape = input("Enter shape name: ")
@@ -32,15 +28,16 @@ while True:
         elif rad_o == "help":
             nccalcs.helpmenu()
             rad_o = 1
+            leave = True
         try:
             float(rad_o)
         except:
             print("PLEASE ENTER A VALID RADIUS.")
             leave = True
-        if not leave:
+        if leave:
+            leave = False
+        else:
             rad_o = float(rad_o)
             lng_o = rad_o * 10
             length = 0
             nccalcs.calculate(shape, rad_o, lng_o, length)
-        else:
-            leave = False
