@@ -1,11 +1,19 @@
 # Nosecone Calculator
 # Calculators and Help Menu
-# v1.0
+# v1.1
 # Written by Roman Rodriguez
 
-# NEEDS ERROR CATCHING ADDED IN PARABOLIC, HAACK, POWER
-
 from math import *
+
+def haack(length, lng_o, rad_o, c):
+    print("0,0")
+    while True:
+        length += 0.1
+        if length > lng_o:
+            break
+        theta = acos(1 - ((2 * length) / lng_o))
+        radius = (rad_o / sqrt(pi)) * (sqrt(theta - ((sin(2 * theta)) / 2) + (c * ((sin(theta)) ** 3))))
+        print(str(round(length, 3)) + "," + str(round(radius, 3)))
 
 def calculate(shape, rad_o, lng_o, length):
     if shape == "conic" or shape == "cn":
@@ -24,23 +32,20 @@ def calculate(shape, rad_o, lng_o, length):
             if length > lng_o:
                 break
             radius = rad_o * (((2 * (length / lng_o)) - (k * ((length / lng_o) ** 2))) / (2 - k))
-            print(str(round(length, 3)) + "," + str(round(radius, 5)))
+            print(str(round(length, 3)) + "," + str(round(radius, 3)))
     elif shape == "haack" or shape == "hs":
         series_type = input("C-value (vk, lv, tng): ")
         if series_type == "vk":
             c = 0
+            haack(length, lng_o, rad_o, c)
         elif series_type == "lv":
             c = 1 / 3
+            haack(length, lng_o, rad_o, c)
         elif series_type == "tng":
             c = 2 / 3
-        print("0,0")
-        while True:
-            length += 0.1
-            if length > lng_o:
-                break
-            theta = acos(1 - ((2 * length) / lng_o))
-            radius = (rad_o / sqrt(pi)) * (sqrt(theta - ((sin(2 * theta)) / 2) + (c * ((sin(theta)) ** 3))))
-            print(str(round(length, 3)) + "," + str(round(radius, 5)))
+            haack(length, lng_o, rad_o, c)
+        else:
+            print("PLEASE ENTER A VALID C-VALUE.")
     elif shape == "power" or shape == "ps":
         n = float(input("N-value: "))
         print("0,0")
@@ -49,7 +54,7 @@ def calculate(shape, rad_o, lng_o, length):
             if length > lng_o:
                 break
             radius = rad_o * ((length / lng_o) ** n)
-            print(str(round(length, 3)) + "," + str(round(radius, 5)))
+            print(str(round(length, 3)) + "," + str(round(radius, 3)))
 
     elif shape == "ellipse" or shape == "ep":
         print("0,0")
@@ -58,7 +63,7 @@ def calculate(shape, rad_o, lng_o, length):
             if length > lng_o:
                 break
             radius = rad_o * (sqrt(1 - ((length ** 2) / (lng_o ** 2))))
-            print(str(round(length, 3)) + "," + str(round(radius, 5)))
+            print(str(round(length, 3)) + "," + str(round(radius, 3)))
 
     elif shape == "ogive" or shape == "to":
         print("0,0")
@@ -68,7 +73,7 @@ def calculate(shape, rad_o, lng_o, length):
             if length > lng_o:
                 break
             radius = sqrt((p ** 2) - ((length - lng_o) ** 2)) + rad_o - p
-            print(str(round(length, 3)) + "," + str(round(radius, 5)))
+            print(str(round(length, 3)) + "," + str(round(radius, 3)))
 
 def helpmenu():
     valid_names = ["conic", "cn", "parabolic", "pb", "haack", "hs", "power", "ps", "ellipse", "ep", "ogive", "to"]
